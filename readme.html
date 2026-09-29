@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0065F1">
+<title>Arusuvai v1.0.0 — Documentation</title>
+<style>
+:root{
+  --bg:#f7f9fc;--surface:#fff;--surface2:#eef3f9;--text:#172033;
+  --muted:#66748b;--border:#d5dfec;--accent:#0065F1;--green:#60764b;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6}
+.wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
+.hero{display:flex;gap:18px;align-items:center;background:linear-gradient(135deg,#fff,#eef3f9);border:1px solid var(--border);border-radius:18px;padding:22px;margin-bottom:18px}
+.logo{width:92px;height:92px;border-radius:22px;object-fit:cover;border:1px solid var(--border)}
+.eyebrow{color:var(--accent);font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+h1,h2,h3{font-family:Georgia,serif;line-height:1.15}
+h1{font-size:34px;margin:4px 0 5px} h2{font-size:23px;margin:0 0 12px} h3{font-size:17px;margin:0 0 8px}
+.subtitle{margin:0;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.feature{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:13px}
+.feature b{display:block;margin-bottom:4px}.feature span{font-size:13px;color:var(--muted)}
+ul{margin:8px 0 0;padding-left:22px}li{margin:4px 0}
+code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+pre{background:#172033;color:#eef3f9;padding:14px;border-radius:10px;overflow:auto}
+.note{border-left:4px solid var(--accent);background:var(--surface2);padding:11px 13px;border-radius:0 10px 10px 0}
+a{color:var(--accent);text-decoration:none}.links{display:flex;flex-wrap:wrap;gap:9px}.links a{border:1px solid var(--border);background:var(--surface2);padding:8px 11px;border-radius:9px;font-weight:800}
+.small{font-size:12px;color:var(--muted)}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.hero{align-items:flex-start}.logo{width:72px;height:72px;border-radius:17px}h1{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <img class="logo" src="./pwa-192x192.png" alt="Arusuvai">
+    <div>
+      <div class="eyebrow">Arusuvai v1.0.0</div>
+      <h1>Your Recipe Companion</h1>
+      <p class="subtitle">A local-first, mobile-first recipe book with bilingual ingredient support, beautiful recipe-card exports, JSON backup/restore and optional Google Drive sync.</p>
+    </div>
+  </div>
+
+  <div class="card"><h2>What is Arusuvai?</h2>
+    <p>Arusuvai is a standalone recipe book designed for everyday kitchen use. Recipes, favorites, recent recipes and the culinary dictionary are kept locally in the browser, while optional Google Drive sync provides an additional backup path.</p>
+  </div>
+
+  <div class="card"><h2>Core features</h2>
+    <div class="grid">
+      <div class="feature"><b>📖 Complete recipe cards</b><span>Recipe identity, bilingual names, timing, servings, difficulty, toolkit, profile, ingredients, cooking phases, cheat sheet and notes.</span></div>
+      <div class="feature"><b>♥ Favorites & recent recipes</b><span>Quickly return to recipes you use most often or opened recently.</span></div>
+      <div class="feature"><b>🔎 Multi-language search</b><span>Search recipe names, Recipe No., local-language names, ingredients, aliases, cuisine and taste.</span></div>
+      <div class="feature"><b>📚 Culinary Dictionary</b><span>Maintain English/local-language terms, aliases and categories for cross-language ingredient discovery.</span></div>
+      <div class="feature"><b>✏️ Recipe builder</b><span>Create, edit, duplicate and delete recipes with grouped ingredients and timed instructions.</span></div>
+      <div class="feature"><b>🌗 Light & dark themes</b><span>Recipe viewing and exports follow the active theme.</span></div>
+      <div class="feature"><b>🖼 3× PNG export</b><span>The complete recipe card is rasterised at three times the base export resolution.</span></div>
+      <div class="feature"><b>🖨 PDF / print</b><span>Use the browser print dialog to print or save the complete recipe card as PDF.</span></div>
+      <div class="feature"><b>🍲 Background watermark</b><span>Recipe artwork can be used as a subtle background watermark; the option is enabled by default.</span></div>
+      <div class="feature"><b>💾 JSON backup / restore</b><span>Backup settings, recipes, dictionary or all data, with optional favorites and recent recipes.</span></div>
+      <div class="feature"><b>🔄 Merge / replace</b><span>Imported Arusuvai backups are identified before matching data is merged or replaced.</span></div>
+      <div class="feature"><b>☁️ Google Drive</b><span>Synchronize selected JSON data with the user's own Google Drive.</span></div>
+    </div>
+  </div>
+
+  <div class="card"><h2>Recipe export</h2>
+    <p>PNG and PDF/print exports use the structured recipe-card layout. The recipe artwork watermark is optional and is checked by default.</p>
+    <pre>Watermark ON  → theme base + low-opacity recipe artwork + recipe card
+Watermark OFF → clean active-theme recipe card
+PNG           → 3× raster rendering
+PDF           → browser Print / Save as PDF</pre>
+    <div class="note">For dark-theme watermark exports, the base is intentionally dark so the background artwork does not overpower the recipe text.</div>
+  </div>
+
+  <div class="card"><h2>Backup & restore</h2>
+    <ul>
+      <li><b>App Settings</b> — app configuration and theme-related settings.</li>
+      <li><b>Recipes</b> — recipe records, favorites and recent-recipe information.</li>
+      <li><b>Culinary Dictionary</b> — dictionary entries and categories.</li>
+      <li><b>All Data</b> — complete Arusuvai data in one JSON file.</li>
+      <li>Favorites and Recent Recipes can be included in backup files.</li>
+      <li>Import supports Merge or Replace for the matching backup type.</li>
+    </ul>
+    <p class="small">Recipe JSON backups do not carry the embedded recipe artwork payload. Built-in/default artwork is restored by the application. Keep any separately supplied custom artwork separately if required.</p>
+  </div>
+
+  <div class="card"><h2>Google Drive sync</h2>
+    <p>Google Drive is optional. The current implementation supports App Settings, Recipes, Culinary Dictionary and All Data.</p>
+    <ul>
+      <li>Connect from <b>Settings → Data Backup</b>.</li>
+      <li>Choose the data types to sync.</li>
+      <li>If both local and Drive data exist, choose local, Drive or merge.</li>
+      <li>The implementation uses Google Identity Services and the Drive API with the <code>drive.file</code> scope.</li>
+      <li>A Google OAuth Web Client ID must be configured for the hosted deployment.</li>
+    </ul>
+  </div>
+
+  <div class="card"><h2>PWA deployment</h2>
+    <p>Host the application over HTTPS, such as GitHub Pages, for service-worker installation and Google Drive authorization.</p>
+    <pre>index.html
+manifest.json
+service-worker.js
+pwa-192x192.png
+pwa-512x512.png
+pwa-maskable-512x512.png
+readme.md
+readme.html
+privacy.html
+terms.html
+LICENSE</pre>
+    <p class="small">The supplied service worker uses network-first handling for navigation/index.html and cached fallbacks for offline use. The current HTML file was intentionally not changed in this delivery; the page must register the service worker for it to activate.</p>
+  </div>
+
+  <div class="card"><h2>Privacy & legal</h2>
+    <p>Core recipe data stays in browser storage on the device/browser where Arusuvai is used. When Google Drive is explicitly connected, selected backup data is sent to the user's own Drive through Google's APIs.</p>
+    <div class="links">
+      <a href="./privacy.html">🔒 Privacy Policy</a>
+      <a href="./terms.html">📜 Terms of Service</a>
+      <a href="./LICENSE">📄 MIT License</a>
+    </div>
+  </div>
+
+  <div class="card"><h2>Version</h2><p><b>Arusuvai — Your Recipe Companion • v1.0.0</b></p><p class="small">Local-first recipe book with optional Google Drive sync and high-resolution export tools.</p></div>
+</div>
+</body>
+</html>
