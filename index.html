@@ -1317,7 +1317,7 @@ Content-Type: application/json\\r\
 // PWA service worker support — intentionally limited to service-worker registration.
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker_js').catch(err => {
+    navigator.serviceWorker.register('./service-worker.js').catch(err => {
       console.warn('Arusuvai service worker registration failed:', err);
     });
   });
