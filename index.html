@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0065F1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="description" content="Arusuvai — Your Recipe Companion">
 <title>Arusuvai — Your Recipe Companion</title>
 <link rel="manifest" href="manifest.json">
@@ -468,6 +471,7 @@ renderLogo();applyTheme();renderSettings();renderRecipes();
     .detail-actions .icon-action svg{width:22px;height:22px}.detail-actions .heart{font-size:25px}.detail-image{max-height:300px;object-fit:cover}.recipe-export-card{overflow:hidden}.recipe-export-card>.card.flat{margin-left:0;margin-right:0}.recipe-content{min-width:0}.recipe-column{min-width:0}.recipe-column .ingredients,.recipe-column .timeline{min-width:0}
     .home-hero{display:flex;justify-content:center;align-items:center}.home-logo{display:block;max-width:100%;height:auto;object-fit:contain}
     @media(max-width:700px){.backup-grid{grid-template-columns:1fr}.dict-toolbar{align-items:stretch;flex-direction:column}.dict-toolbar .search-row{max-width:none}.dict-grid-v7{grid-template-columns:1fr 1fr 1.2fr .9fr 78px}.dict-grid-v7>div{padding:8px 6px}.dict-body-scroll{max-height:390px}.detail-actions{gap:4px}.detail-actions .icon-action{width:38px;height:38px}.detail-image{max-height:260px}}
+    .instruction-group{margin:0 0 14px}.instruction-group>h4{margin:0 0 7px;font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.6px;font-weight:900}.instruction-group .group-steps{margin:0}
   `;document.head.appendChild(v7style);
   document.documentElement.style.overflow='hidden';
   document.body.style.overflow='hidden';
@@ -747,7 +751,7 @@ Content-Type: application/json\\r\
     // Recipe VIEW only: restored from the original 0930 OAuth recipe-detail layout.
     // The current v1.1.0 action toolbar is intentionally kept unchanged.
     const ingredients=(r.ingredients||[]).map(g=>`<div class="ingredient-group"><h4>${escapeHtml(g[0])}</h4>${(g[1]||[]).map(i=>`<div class="ingredient"><span class="qty">${escapeHtml(i[0])}</span><span>${escapeHtml(displayIngredientText(i[1]))}</span></div>`).join('')}</div>`).join('');
-    const phases=(r.phases||[]).map(p=>`<div class="phase"><div class="phase-time">${escapeHtml(p[0])}</div><h3>${escapeHtml(p[1])}</h3><ol>${(p[2]||[]).map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ol>${p[3]?`<div class="note">${escapeHtml(p[3])}</div>`:''}</div>`).join('');
+    const phases=getInstructionGroups(r).map(g=>`<div class="instruction-group"><h4>${escapeHtml(g.name||'Method')}</h4><div class="group-steps">${(g.steps||[]).map(st=>`<div class="phase"><div class="phase-time">${escapeHtml(st.time||'')}</div><h3>${escapeHtml(st.title||'')}</h3><ol>${(st.instructions||[]).map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ol>${st.note?`<div class="note">${escapeHtml(st.note)}</div>`:''}</div>`).join('')}</div></div>`).join('');
     const cheat=(r.cheat||[]).map(c=>`<div><b>${escapeHtml(c[0])}</b><p>${escapeHtml(c[1]||'')}</p></div>`).join('');
     const recipeShareIcon='<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="18" cy="13" r="7" fill="none" stroke="currentColor" stroke-width="2.8"/><path d="M7 38c0-7 5-12 11-12s11 5 11 12" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="34" cy="18" r="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="39" cy="31" r="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M30 20l6 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';
     const editIcon='<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m10 34-2 8 8-2L37 19l-6-6z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="m28 15 6 6M8 42h10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
