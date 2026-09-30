@@ -297,7 +297,7 @@ function persist(){
   }
 }
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove('show'),1900)}
-function applyTheme(){document.body.classList.toggle('dark',state.theme==='dark');$('#themeQuick').textContent=state.theme==='dark'?'☀️':'🌙';const th=state.themes[state.theme];document.documentElement.style.setProperty('--accent',th.accent);document.documentElement.style.setProperty('--bg',th.bg);document.documentElement.style.setProperty('--surface',th.surface);document.documentElement.style.setProperty('--text',th.text);document.querySelector('meta[name="theme-color"]').setAttribute('content',th.accent)}
+function applyTheme(){document.body.classList.toggle('dark',state.theme==='dark');$('#themeQuick').textContent=state.theme==='dark'?'☀️':'🌙';const th=state.themes[state.theme];document.documentElement.style.setProperty('--accent',th.accent);document.documentElement.style.setProperty('--bg',th.bg);document.documentElement.style.setProperty('--surface',th.surface);document.documentElement.style.setProperty('--text',th.text);}
 function setPage(name){$$('.page').forEach(p=>p.classList.remove('active'));const p=$('#page-'+name);if(p)p.classList.add('active');$$('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.page===name));$('#mainScroll').scrollTop=0;if(name!=='recipes')hideRecipeSubViews()}
 function hideRecipeSubViews(){$('#recipeListView').style.display='block';$('#recipeDetailView').style.display='none';$('#builderPanel').style.display='none'}
 function renderLogo(){}
