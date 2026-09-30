@@ -1,4 +1,4 @@
-const CACHE_NAME = 'arusuvai-v1.0.0-shell';
+const CACHE_NAME = 'arusuvai-v1.1.0-shell';
 
 const APP_SHELL = [
   './',
