@@ -162,7 +162,7 @@ main{position:fixed;top:66px;bottom:72px;left:0;right:0;overflow-x:hidden;overfl
         <div class="about-feature"><strong>🌗 Light & dark themes</strong><span>Switch themes from the top bar. Recipe viewing and exports use the active theme.</span></div>
         <div class="about-feature"><strong><svg class="about-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="10" cy="24" r="6" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="37" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="37" cy="38" r="6" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 21 32 12M15 27 32 36" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg> High-resolution PNG export</strong><span>Export the complete recipe card as a full-card PNG at 3× rendering resolution for sharp sharing and printing.</span></div>
         <div class="about-feature"><strong><svg class="about-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 18V7h20v11" fill="none" stroke="currentColor" stroke-width="2.8"/><rect x="7" y="18" width="34" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2.8"/><path d="M14 30h20v11H14z" fill="var(--surface)" stroke="currentColor" stroke-width="2.8"/><circle cx="34" cy="24" r="2" fill="currentColor"/></svg> Print / Save as PDF</strong><span>Print the complete recipe card using the same export layout. Browser print can be used to save a PDF.</span></div>
-        <div class="about-feature"><strong><svg class="about-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="18" cy="13" r="7" fill="none" stroke="currentColor" stroke-width="2.8"/><path d="M7 38c0-7 5-12 11-12s11 5 11 12" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="34" cy="18" r="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="39" cy="31" r="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M30 20l6 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg> Share one recipe</strong><span>Share an individual recipe as a JSON file so another Arusuvai user can import just that recipe, without sharing your complete recipe library. This is separate from JSON backup &amp; restore.</span></div>
+        <div class="about-feature"><strong><svg class="about-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="18" cy="13" r="7" fill="none" stroke="currentColor" stroke-width="2.8"/><path d="M7 38c0-7 5-12 11-12s11 5 11 12" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="34" cy="18" r="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="39" cy="31" r="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M30 20l6 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg> Share one recipe</strong><span>Share an individual recipe as a JSON file so another Arusuvai copy can import just that recipe, without sharing your complete recipe library. This is separate from JSON backup &amp; restore.</span></div>
         <div class="about-feature"><strong><svg class="about-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 9h20l6 6v24H14z" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round"/><path d="M34 9v8h8M8 16h20v23H8z" fill="var(--surface)" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round"/><path d="M13 23h10M13 29h10M13 35h7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg> Duplicate recipe</strong><span>Make a copy of any recipe to use as a starting point for a variation. The copy opens in the builder and is saved only when you save it.</span></div>
         <div class="about-feature"><strong>🍲 Recipe image watermark</strong><span>Export/print can place the recipe artwork behind the card at low opacity. The watermark option is checked by default.</span></div>
         <div class="about-feature"><strong>💾 JSON backup & restore</strong><span>Back up App Settings, Recipes, Culinary Dictionary or All Data. Favorites and Recent Recipes can be included.</span></div>
@@ -423,7 +423,9 @@ function renderMainSettings(){
 function renderDictionary(){const q=($('#dictSearch')?.value||'').toLowerCase();let ds=state.dictionary.filter(d=>!q||[d.en,d.ta,d.aliases].join(' ').toLowerCase().includes(q));$('#settings-dictionary').innerHTML=`<div class="info-box">Map ingredients in English, Tamil or another language. These mappings help bilingual recipe search.</div><div class="card flat"><div class="search-row"><input id="dictSearch" class="search-input" placeholder="Search ingredient in any language…" value="${escapeHtml(q)}"><button class="btn" id="addDict">＋ Add Entry</button></div><div class="dict-table"><div class="dict-grid"><div class="head">Primary term</div><div class="head">Tamil / local</div><div class="head">Aliases</div><div class="head">Action</div>${ds.map(d=>`<div>${escapeHtml(d.en)}</div><div>${escapeHtml(d.ta)}</div><div>${escapeHtml(d.aliases||'')}</div><div><button class="btn ghost small" data-de="${state.dictionary.indexOf(d)}">Edit</button></div>`).join('')}</div></div></div>`;$('#dictSearch').oninput=()=>renderDictionary();$('#addDict').onclick=()=>openDictEditor(null);$$('[data-de]').forEach(b=>b.onclick=()=>openDictEditor(+b.dataset.de))}
 function openDictEditor(idx){const d=idx==null?{en:'',ta:'',aliases:'',category:'ingredient'}:state.dictionary[idx];showModal('Dictionary Entry',`<div class="form-grid"><div class="field"><label>Primary term</label><input id="deEn" value="${escapeHtml(d.en)}"></div><div class="field"><label>Tamil / local term</label><input id="deTa" value="${escapeHtml(d.ta)}"></div><div class="field full"><label>Equivalent / alias terms · comma separated</label><input id="deAliases" value="${escapeHtml(d.aliases||'')}"></div><div class="field full"><label>Category</label><input id="deCat" value="${escapeHtml(d.category||'ingredient')}"></div></div><div style="display:flex;justify-content:flex-end;gap:7px;margin-top:12px"><button class="btn ghost" id="deCancel">Cancel</button><button class="btn" id="deSave">Save Entry</button></div>`);$('#deCancel').onclick=closeModal;$('#deSave').onclick=()=>{const x={en:$('#deEn').value.trim(),ta:$('#deTa').value.trim(),aliases:$('#deAliases').value.trim(),category:$('#deCat').value.trim()||'ingredient'};if(!x.en&&!x.ta){toast('Enter at least one term');return}if(idx==null)state.dictionary.push(x);else state.dictionary[idx]=x;persist();closeModal();renderDictionary();toast('Dictionary saved')}}
 function renderDataBackup(){$('#settings-data').innerHTML=`<details class="settings-collapsible" open><summary>Data Backup</summary><div class="body"><div class="info-box" style="margin-top:12px">Backup and restore design is reserved for the next pass. The tab is kept here so all data-related controls remain under Settings.</div><div class="settings-row"><span class="setting-label"><b>Standalone JSON backup</b><small>Export/import of recipes, settings and dictionary will be placed here.</small></span><span class="tag">Next pass</span></div><div class="settings-row"><span class="setting-label"><b>Google Drive</b><small>Drive integration requires the hosted version of Arusuvai.</small></span><span class="tag">Hosted</span></div></div></details>`}
-function showModal(title,body){$('#modalTitle').textContent=title;$('#modalBody').innerHTML=body;$('#modalBackdrop').classList.add('show')}function closeModal(){$('#modalBackdrop').classList.remove('show')}
+function showModal(title,body){if(window.__modalDismiss){const f=window.__modalDismiss;window.__modalDismiss=null;f()}$('#modalTitle').textContent=title;$('#modalBody').innerHTML=body;$('#modalBackdrop').classList.add('show')}function closeModal(){$('#modalBackdrop').classList.remove('show');if(window.__modalDismiss){const f=window.__modalDismiss;window.__modalDismiss=null;f()}}
+function askChoice(html,title,buttons){return new Promise(resolve=>{const btns=buttons.map((b,i)=>`<button class="btn${b.style==='ghost'?' ghost':''}" ${b.style==='danger'?'style="background:var(--danger);border-color:var(--danger);color:#fff"':''} data-ask="${i}">${escapeHtml(b.label)}</button>`).join('');showModal(title||'Please confirm',`<p style="margin:0 0 4px;line-height:1.5">${html}</p><div style="display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin-top:14px">${btns}</div>`);window.__modalDismiss=()=>resolve(null);$$('[data-ask]').forEach(el=>el.onclick=()=>{window.__modalDismiss=null;closeModal();resolve(buttons[+el.dataset.ask].value)})})}
+async function askConfirm(html,opts={}){const r=await askChoice(html,opts.title,[{label:opts.cancel||'Cancel',value:false,style:'ghost'},{label:opts.ok||'OK',value:true,style:opts.danger?'danger':''}]);return r===true}
 function downloadJson(name,obj){const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 function recipeCardHtml(r){
  const theme=state.theme==='dark'?{bg:'#12161b',surface:'#171b21',text:'#f1f2f4',muted:'#8995a7',border:'#303844',soft:'#1e242c',accent:'#D9A441'}:{bg:'#f7f9fc',surface:'#ffffff',text:'#172033',muted:'#71809a',border:'#d5dfec',soft:'#f1f5fa',accent:'#0065F1'};
@@ -556,7 +558,7 @@ renderLogo();applyTheme();renderSettings();renderRecipes();
     $('#dictSearch').oninput=()=>{dictPage=1;renderDictionaryV7()};
     $('#addDict').onclick=()=>openDictEditorV7(null);
     $$('[data-de]').forEach(b=>b.onclick=()=>openDictEditorV7(+b.dataset.de));
-    $$('[data-dd]').forEach(b=>b.onclick=()=>{const idx=+b.dataset.dd;const d=state.dictionary[idx];if(!d)return;if(confirm(`Delete dictionary entry “${d.en||d.ta}”?`)){state.dictionary.splice(idx,1);persist();renderDictionaryV7();toast('Dictionary entry deleted')}});
+    $$('[data-dd]').forEach(b=>b.onclick=async()=>{const idx=+b.dataset.dd;const d=state.dictionary[idx];if(!d)return;if(await askConfirm(`Delete dictionary entry <b>${escapeHtml(d.en||d.ta||'')}</b>?`,{title:'Delete entry',ok:'Delete',danger:true})){state.dictionary.splice(idx,1);persist();renderDictionaryV7();toast('Dictionary entry deleted')}});
     $('#dictPrev').onclick=()=>{if(dictPage>1){dictPage--;renderDictionaryV7()}};$('#dictNext').onclick=()=>{if(dictPage<pages){dictPage++;renderDictionaryV7()}};
     $('#addCategory').onclick=()=>openCategoryEditorV7(null);
     $$('[data-cat-edit]').forEach(b=>b.onclick=()=>openCategoryEditorV7(b.dataset.catEdit));
@@ -569,11 +571,11 @@ renderLogo();applyTheme();renderSettings();renderRecipes();
     $('#catCancel').onclick=closeModal;
     $('#catSave').onclick=()=>{const n=$('#catName').value.trim();if(!n){toast('Enter a category name');return}const exists=state.dictionaryCategories.some(c=>c.toLowerCase()===n.toLowerCase()&&c!==oldName);if(exists){toast('Category already exists');return}if(oldName){state.dictionaryCategories=state.dictionaryCategories.map(c=>c===oldName?n:c);state.dictionary.forEach(d=>{if((d.category||'Uncategorized')===oldName)d.category=n})}else state.dictionaryCategories.push(n);state.dictionaryCategories=[...new Set(state.dictionaryCategories)].sort((a,b)=>a.localeCompare(b));persist();closeModal();renderDictionaryV7();toast(oldName?'Category updated':'Category created')};
   }
-  function deleteCategoryV7(name){
+  async function deleteCategoryV7(name){
     if(name==='Uncategorized'){toast('Uncategorized cannot be deleted');return}
     const count=state.dictionary.filter(d=>(d.category||'Uncategorized')===name).length;
-    const msg=count?`Delete category “${name}”? ${count} dictionary entr${count===1?'y':'ies'} will be moved to Uncategorized.`:`Delete category “${name}”?`;
-    if(!confirm(msg))return;
+    const msg=count?`Delete category <b>${escapeHtml(name)}</b>? ${count} dictionary entr${count===1?'y':'ies'} will be moved to Uncategorized.`:`Delete category <b>${escapeHtml(name)}</b>?`;
+    if(!(await askConfirm(msg,{title:'Delete category',ok:'Delete',danger:true})))return;
     state.dictionaryCategories=state.dictionaryCategories.filter(c=>c!==name);if(!state.dictionaryCategories.includes('Uncategorized'))state.dictionaryCategories.push('Uncategorized');state.dictionary.forEach(d=>{if((d.category||'Uncategorized')===name)d.category='Uncategorized'});persist();renderDictionaryV7();toast('Category deleted')
   }
   function openDictEditorV7(idx){
@@ -603,18 +605,24 @@ renderLogo();applyTheme();renderSettings();renderRecipes();
     toast('Backup file(s) exported');
   }
   function mergeDictionary(local,remote){const out=JSON.parse(JSON.stringify(local||[]));const key=d=>[d.en,d.ta,d.aliases].join('|').toLowerCase();const seen=new Set(out.map(key));(remote||[]).forEach(d=>{if(!seen.has(key(d))){out.push(d);seen.add(key(d))}});return out}
-  function mergeRecipes(local,remote){const map=new Map((local||[]).map(r=>[r.id,r]));(remote||[]).forEach(r=>{const l=map.get(r.id);if(!l)map.set(r.id,r);else if((r.updatedAt||'')>(l.updatedAt||''))map.set(r.id,{...l,...r,favorite:!!(l.favorite||r.favorite)});else l.favorite=!!(l.favorite||r.favorite)});return [...map.values()]};
+  function recipeNameKey(n){return String(n||'').trim().toLowerCase().replace(/\s+/g,' ')}
+function mergeRecipes(local,remote){
+  const out=(local||[]).slice();const used=new Set(out.map(r=>Number(r.recipeNo)||0));let maxNo=Math.max(0,...used);
+  (remote||[]).forEach(r=>{
+    let i=out.findIndex(x=>x.id===r.id);
+    if(i<0){const k=recipeNameKey(r.name);if(k)i=out.findIndex(x=>recipeNameKey(x.name)===k)}
+    if(i<0){const c={...r};const no=Number(c.recipeNo)||0;if(!no||used.has(no)){maxNo+=1;c.recipeNo=maxNo}used.add(Number(c.recipeNo));maxNo=Math.max(maxNo,Number(c.recipeNo));out.push(c);return}
+    const l=out[i];const fav=!!(l.favorite||r.favorite);
+    if((r.updatedAt||'')>(l.updatedAt||''))out[i]={...l,...r,name:String(r.name||l.name||'').trim(),id:l.id,recipeNo:l.recipeNo,createdAt:l.createdAt||r.createdAt,favorite:fav};else l.favorite=fav;
+  });
+  return out}
   function applyImportedPayload(p,mode,doPersist=true){
     if(!p||typeof p!=='object')throw new Error('Invalid Arusuvai JSON');
     const type=p.type||'all_data';
     if(type==='settings'){if(p.settings)state.settings=mode==='replace'?{...defaults.settings,...p.settings}:{...state.settings,...p.settings};if(p.theme)state.theme=p.theme;if(Array.isArray(p.recent))state.recent=mode==='replace'?p.recent:[...new Set([...state.recent,...p.recent])].slice(0,20);if(Array.isArray(p.favorites)){const fav=new Set(p.favorites);state.recipes.forEach(r=>{r.favorite=fav.has(r.id)})}}
     else if(type==='culdict'){if(Array.isArray(p.categories))state.dictionaryCategories=mode==='replace'?[...new Set(p.categories.concat(['Uncategorized']))]:[...new Set([...state.dictionaryCategories,...p.categories,'Uncategorized'])];if(Array.isArray(p.dictionary))state.dictionary=mode==='replace'?p.dictionary:mergeDictionary(state.dictionary,p.dictionary);}
     else if(type==='recipes'){if(Array.isArray(p.recipes))state.recipes=mode==='replace'?p.recipes:mergeRecipes(state.recipes,p.recipes);if(Array.isArray(p.recent))state.recent=mode==='replace'?p.recent:[...new Set([...state.recent,...p.recent])].slice(0,20);}
-    else if(type==='recipe'){
-      if(!p.recipe||typeof p.recipe!=='object')throw new Error('Invalid recipe JSON');
-      const incoming=JSON.parse(JSON.stringify(p.recipe));incoming.id=incoming.id||'r'+Date.now();incoming.recipeNo=Number(incoming.recipeNo)||nextAutoRecipeNo();incoming.mine=true;incoming.favorite=false;incoming.image=dataSvg(RECIPE_SVG_INTERNAL);incoming.createdAt=incoming.createdAt||new Date().toISOString();incoming.updatedAt=new Date().toISOString();
-      const existing=state.recipes.findIndex(x=>x.id===incoming.id);if(existing>=0)state.recipes[existing]=incoming;else state.recipes.unshift(incoming);
-    }
+    else if(type==='recipe'){importSingleRecipeV12(p.recipe,'add')}
     else {
       if(mode==='replace'){if(p.settings)state.settings={...state.settings,...p.settings};if(p.theme)state.theme=p.theme;if(Array.isArray(p.recipes))state.recipes=p.recipes;if(Array.isArray(p.categories))state.dictionaryCategories=[...new Set(p.categories.concat(['Uncategorized']))];if(Array.isArray(p.dictionary))state.dictionary=p.dictionary;if(Array.isArray(p.recent))state.recent=p.recent;}
       else {if(p.settings)state.settings={...state.settings,...p.settings};if(p.theme)state.theme=p.theme;if(Array.isArray(p.recipes))state.recipes=mergeRecipes(state.recipes,p.recipes);if(Array.isArray(p.categories))state.dictionaryCategories=[...new Set([...state.dictionaryCategories,...p.categories,'Uncategorized'])];if(Array.isArray(p.dictionary))state.dictionary=mergeDictionary(state.dictionary,p.dictionary);if(Array.isArray(p.recent))state.recent=[...new Set([...state.recent,...p.recent])].slice(0,20);}
@@ -624,6 +632,36 @@ renderLogo();applyTheme();renderSettings();renderRecipes();
     state.recipes.forEach(r=>{if(!r.createdAt)r.createdAt=new Date().toISOString();if(!r.updatedAt)r.updatedAt=r.createdAt;r.image=dataSvg(RECIPE_SVG_INTERNAL)});
     if(doPersist)persist();applyTheme();renderLogo();renderMainSettingsV7();renderDictionaryV7();renderDataBackupV7();renderRecipes();toast('Data imported');
   }
+  function importSingleRecipeV12(rec,action){
+    if(!rec||typeof rec!=='object')throw new Error('Invalid recipe JSON');
+    const inc=JSON.parse(JSON.stringify(rec));const now=new Date().toISOString();inc.image=dataSvg(RECIPE_SVG_INTERNAL);
+    const idx=state.recipes.findIndex(x=>recipeNameKey(x.name)===recipeNameKey(inc.name));
+    if(action==='overwrite'&&idx>=0){const l=state.recipes[idx];state.recipes[idx]={...inc,id:l.id,recipeNo:l.recipeNo,favorite:l.favorite,mine:true,createdAt:l.createdAt||now,updatedAt:now};return 'overwritten'}
+    inc.id='r'+Date.now()+Math.random().toString(36).slice(2,6);inc.recipeNo=nextAutoRecipeNo();inc.mine=true;inc.favorite=false;inc.createdAt=now;inc.updatedAt=now;
+    if(action==='copy'&&idx>=0)inc.name=String(inc.name||'Recipe')+' (Imported)';
+    state.recipes.unshift(inc);return 'added';
+  }
+  async function importSingleRecipesV12(items){
+    const names=items.map(x=>String(x.p.recipe?.name||'').trim()||'Untitled recipe');
+    const conflict=n=>state.recipes.some(r=>recipeNameKey(r.name)===recipeNameKey(n));
+    if(!names.some(conflict)){
+      const ok=await askConfirm(`Add ${names.map(n=>`<b>${escapeHtml(n)}</b>`).join(', ')} to your recipes?`,{title:'Import recipe',ok:'Import'});
+      if(!ok)return;
+    }
+    let added=0,over=0,skipped=0;
+    try{
+      for(let i=0;i<items.length;i++){
+        const rec=items[i].p.recipe,n=names[i];
+        if(conflict(n)){
+          const c=await askChoice(`A recipe named <b>${escapeHtml(n)}</b> already exists on this device. Overwrite it with the imported version, or keep both? Overwriting keeps your Recipe No. and favorite status.`,'Recipe already exists',[{label:'Skip',value:'skip',style:'ghost'},{label:'Keep both',value:'copy',style:'ghost'},{label:'Overwrite',value:'overwrite',style:''}]);
+          if(c==='overwrite'){importSingleRecipeV12(rec,'overwrite');over++}else if(c==='copy'){importSingleRecipeV12(rec,'copy');added++}else skipped++;
+        }else{importSingleRecipeV12(rec,'add');added++}
+      }
+    }catch(e){console.error(e);toast('Import failed: '+(e.message||'invalid recipe file'));return}
+    if(!added&&!over){toast('No recipes imported');return}
+    state.dataCleared=false;persist();window.__recipesInitial=false;favoriteMode=false;recentMode=false;window.renderRecipes();
+    toast([added?`${added} recipe(s) added`:'',over?`${over} overwritten`:'',skipped?`${skipped} skipped`:''].filter(Boolean).join(' · '));
+  }
   function importBackupFiles(files){
     const selected=[...files];
     if(!selected.length)return;
@@ -631,6 +669,9 @@ renderLogo();applyTheme();renderSettings();renderRecipes();
       const valid=items.filter(x=>x.p&&((x.p.format==='Arusuvai Backup'&&['settings','culdict','recipes','all_data'].includes(x.p.type))||(x.p.format==='Arusuvai Recipe'&&x.p.type==='recipe'&&x.p.recipe)));
       const bad=items.filter(x=>!x.p||!((x.p.format==='Arusuvai Backup'&&['settings','culdict','recipes','all_data'].includes(x.p.type))||(x.p.format==='Arusuvai Recipe'&&x.p.type==='recipe'&&x.p.recipe)));
       if(!valid.length){toast('No valid Arusuvai backup files selected');return}
+      const singles=valid.filter(x=>x.p.type==='recipe');
+      if(singles.length&&singles.length<valid.length){toast('Import single-recipe files separately from backup files');return}
+      if(singles.length){importSingleRecipesV12(singles);return}
       const labels={settings:'App Settings',culdict:'Culinary Dictionary',recipes:'Recipes',all_data:'All Data',recipe:'Single Recipe'};
       const summary=valid.map(x=>`<div class="import-file"><b>${escapeHtml(x.file.name)}</b><span>${labels[x.p.type]} · exported ${escapeHtml(String(x.p.exportedAt||'unknown'))}</span></div>`).join('');
       const badHtml=bad.length?`<div class="info-box" style="margin-top:8px">${bad.length} file(s) were skipped because their Arusuvai backup header/type was not recognized.</div>`:'';
@@ -661,7 +702,7 @@ renderLogo();applyTheme();renderSettings();renderRecipes();
     <details class="settings-collapsible" open><summary>Reset App Data</summary><div class="body"><div class="info-box">Choose whether a reset should leave Arusuvai empty or restore the built-in recipes and culinary dictionary.</div><div class="backup-actions"><button class="btn danger" id="clearAllData">Clear all data and leave the app empty</button><button class="btn" id="clearAndDefaults">Clear all data and restore the defaults</button></div></div></details>
     <details class="settings-collapsible" open><summary>Google Drive Sync</summary><div class="body"><div class="info-box">Drive sync only touches the data types you select below. It uses the same four JSON files as local backup and never needs to sync unrelated data.</div><div class="backup-grid drive-select"><label class="backup-check"><input type="checkbox" id="driveSettings" checked><span><b>App Settings</b><small>arusuvai_settings.json</small></span></label><label class="backup-check"><input type="checkbox" id="driveRecipes" checked><span><b>Recipes</b><small>arusuvai_recipes.json</small></span></label><label class="backup-check"><input type="checkbox" id="driveCulDict" checked><span><b>Culinary Dictionary</b><small>arusuvai_culdict.json</small></span></label><label class="backup-check"><input type="checkbox" id="driveAll"><span><b>All these data</b><small>arusuvai_all_data.json</small></span></label></div><div class="backup-actions"><button class="btn ghost" id="driveConnect">Connect Google Drive</button><button class="btn" id="driveSync">Sync selected</button><span id="driveStatus" class="small muted">Not connected</span></div><div class="small muted" id="driveLastSync" style="margin-top:8px"></div></div></details>`;
     $('#exportBackup').onclick=exportSelectedBackups;$('#importBackup').onchange=e=>{if(e.target.files?.length)importBackupFiles(e.target.files)};
-    $('#clearAllData').onclick=()=>{if(confirm('Clear all local Arusuvai data and leave the app empty?'))resetDataV7(false)};$('#clearAndDefaults').onclick=()=>{if(confirm('Clear all local Arusuvai data and restore the built-in defaults?'))resetDataV7(true)};
+    $('#clearAllData').onclick=async()=>{if(await askConfirm('Clear all local Arusuvai data and leave the app empty? This cannot be undone.',{title:'Clear all data',ok:'Clear data',danger:true}))resetDataV7(false)};$('#clearAndDefaults').onclick=async()=>{if(await askConfirm('Clear all local Arusuvai data and restore the built-in defaults? This cannot be undone.',{title:'Restore defaults',ok:'Restore',danger:true}))resetDataV7(true)};
     $('#driveConnect').onclick=()=>driveConnectV7();$('#driveSync').onclick=()=>driveSyncV7();
     renderDriveSyncStatusV7();
   }
@@ -777,7 +818,7 @@ renderLogo();applyTheme();renderSettings();renderRecipes();
   }
   window.__renderRecipeDetailExact=renderRecipeDetail;
   
-  function deleteRecipeV7(id){const r=state.recipes.find(x=>x.id===id);if(!r)return;if(!confirm(`Delete Recipe No. ${recipeNumber(r)} · ${r.name}? This cannot be undone.`))return;state.recipes=state.recipes.filter(x=>x.id!==id);state.recent=state.recent.filter(x=>x!==id);if(currentRecipeId===id)currentRecipeId=null;persist();hideRecipeSubViews();if(window.renderRecipes)window.renderRecipes();else renderRecipes();toast('Recipe deleted')}
+  async function deleteRecipeV7(id){const r=state.recipes.find(x=>x.id===id);if(!r)return;if(!(await askConfirm(`Delete Recipe No. ${recipeNumber(r)} · <b>${escapeHtml(r.name||'')}</b>? This cannot be undone.`,{title:'Delete recipe',ok:'Delete',danger:true})))return;state.recipes=state.recipes.filter(x=>x.id!==id);state.recent=state.recent.filter(x=>x!==id);if(currentRecipeId===id)currentRecipeId=null;persist();hideRecipeSubViews();if(window.renderRecipes)window.renderRecipes();else renderRecipes();toast('Recipe deleted')}
   function duplicateRecipeV7(id){const r=state.recipes.find(x=>x.id===id);if(!r)return;
     showModal('Duplicate recipe',`<p>Duplicate <b>${escapeHtml(r.name||'this recipe')}</b>? A copy will open in the recipe builder, and it is only added to your recipes when you save it.</p><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px"><button class="btn ghost" id="dupCancel">Cancel</button><button class="btn" id="dupContinue">Duplicate</button></div>`);
     $('#dupCancel').onclick=closeModal;
@@ -844,13 +885,13 @@ renderLogo();applyTheme();renderSettings();renderRecipes();
   function wireBuilderRowsV11(){
     $$('#ingredientBuilder .add-ig-row').forEach(b=>{b.onclick=()=>{const rows=b.closest('.section-body').querySelector('.ig-rows');const d=document.createElement('div');d.className='array-row';d.innerHTML='<input class="ig-qty" placeholder="Qty"><input class="ig-text" placeholder="Ingredient / local text"><button class="remove-row" type="button">×</button>';rows.appendChild(d);wireBuilderRowsV11()}});
     $$('#ingredientBuilder .remove-row').forEach(b=>{b.onclick=()=>{const row=b.closest('.array-row');if(row)row.remove()}});
-    $$('#ingredientBuilder .delete-ing-group').forEach(b=>{b.onclick=()=>{const g=b.closest('.builder-group');if(!g)return;if(confirm('Delete this ingredient group and all its ingredients?'))g.remove()}});
+    $$('#ingredientBuilder .delete-ing-group').forEach(b=>{b.onclick=async()=>{const g=b.closest('.builder-group');if(!g)return;if(await askConfirm('Delete this ingredient group and all its ingredients?',{title:'Delete group',ok:'Delete',danger:true}))g.remove()}});
     $$('#phaseBuilder .add-ph-step').forEach(b=>{b.onclick=()=>{const g=b.closest('.builder-group'),wrap=g.querySelector('.ph-steps-builder'),n=wrap.querySelectorAll('.builder-step').length,d=document.createElement('details');d.className='builder-step';d.dataset.step=n;d.innerHTML=`<summary>Instruction Step ${n+1}</summary><div class="step-body"><div class="form-grid"><div class="field"><label>Step time</label><input class="ph-step-time" value="00:00" placeholder="00:10"></div><div class="field"><label>Step title</label><input class="ph-step-title" value="Step ${n+1}"></div><div class="field full"><label>Instructions · one per line</label><textarea class="ph-step-text" rows="4" placeholder="One instruction per line"></textarea></div><div class="field full"><label>Note / warning</label><textarea class="ph-step-note" rows="2" placeholder="Optional note or warning"></textarea></div></div><div class="builder-group-actions"><button class="btn danger small delete-ph-step" type="button">Delete step</button></div></div>`;wrap.appendChild(d);wireBuilderRowsV11()}});
-    $$('#phaseBuilder .delete-ph-step').forEach(b=>{b.onclick=()=>{const d=b.closest('.builder-step');if(!d)return;if(confirm('Delete this instruction step?')){d.remove();renumberInstructionSteps(d.closest('.builder-group'))}}});
-    $$('#phaseBuilder .delete-ph-group').forEach(b=>{b.onclick=()=>{const g=b.closest('.builder-group');if(!g)return;if(confirm('Delete this instruction group and all its steps?'))g.remove()}});
+    $$('#phaseBuilder .delete-ph-step').forEach(b=>{b.onclick=async()=>{const d=b.closest('.builder-step');if(!d)return;if(await askConfirm('Delete this instruction step?',{title:'Delete step',ok:'Delete',danger:true})){d.remove();renumberInstructionSteps(d.closest('.builder-group'))}}});
+    $$('#phaseBuilder .delete-ph-group').forEach(b=>{b.onclick=async()=>{const g=b.closest('.builder-group');if(!g)return;if(await askConfirm('Delete this instruction group and all its steps?',{title:'Delete group',ok:'Delete',danger:true}))g.remove()}});
   }
   function renumberInstructionSteps(group){if(!group)return;group.querySelectorAll('.builder-step').forEach((d,i)=>{d.dataset.step=i;const q=d.querySelector('summary');if(q)q.firstChild.textContent=`Instruction Step ${i+1}`;const t=d.querySelector('.ph-step-title');if(t&&!t.value.trim())t.value=`Step ${i+1}`})}
-  function saveBuilderV7(id){
+  async function saveBuilderV7(id){
     const name=$('#fName').value.trim();if(!name){toast('Recipe name is required');return}
     const old=id?state.recipes.find(x=>x.id===id):null;const prep=+$('#fPrep').value||0,cook=+$('#fCook').value||0;
     let ingredients=$$('#ingredientBuilder>[data-ig]').map(g=>[g.querySelector('.ig-name').value.trim(),[...g.querySelectorAll('.array-row')].map(row=>[row.querySelector('.ig-qty').value.trim(),row.querySelector('.ig-text').value.trim()]).filter(x=>x[1])]).filter(g=>g[1].length);
@@ -858,14 +899,14 @@ renderLogo();applyTheme();renderSettings();renderRecipes();
     {
       const key=n=>String(n||'').trim().toLowerCase();
       const dups=names=>{const m=new Map();names.forEach(n=>{const k=key(n),e=m.get(k)||{label:String(n||'').trim(),count:0};e.count++;m.set(k,e)});return[...m.values()].filter(e=>e.count>1).map(e=>e.label)};
-      const show=l=>l.map(n=>n?`"${n}"`:'(blank name)').join(', ');
+      const show=l=>l.map(n=>n?`<b>${escapeHtml(n)}</b>`:'<i>(blank name)</i>').join(', ');
       const dIng=dups(ingredients.map(g=>g[0])),dIns=dups(instructionGroups.map(g=>g.name));
       if(dIng.length||dIns.length){
-        let msg='Some groups share the same name. Their contents will be merged into a single group.\n';
-        if(dIng.length)msg+='\nIngredient groups: '+show(dIng);
-        if(dIns.length)msg+='\nInstruction groups: '+show(dIns);
-        msg+='\n\nContinue?';
-        if(!confirm(msg))return;
+        let msg='Some groups share the same name. Their contents will be merged into a single group.<br>';
+        if(dIng.length)msg+='<br>Ingredient groups: '+show(dIng);
+        if(dIns.length)msg+='<br>Instruction groups: '+show(dIns);
+        msg+='<br><br>Continue?';
+        if(!(await askConfirm(msg,{title:'Duplicate group names',ok:'Continue'})))return;
         const mi=new Map();ingredients.forEach(g=>{const k=key(g[0]);if(mi.has(k))mi.get(k)[1].push(...g[1]);else mi.set(k,[g[0],[...g[1]]])});ingredients=[...mi.values()];
         const ms=new Map();instructionGroups.forEach(g=>{const k=key(g.name);if(ms.has(k))ms.get(k).steps.push(...g.steps);else ms.set(k,{name:g.name,steps:[...g.steps]})});instructionGroups=[...ms.values()];
       }
