@@ -1,4 +1,10 @@
-const CACHE_NAME = 'arusuvai-v1.1.0-shell';
+// Arusuvai Service Worker
+// Version: v1.0.1
+// Handles offline caching and detects new Arusuvai versions.
+// All apps share one GitHub Pages origin (and one Cache Storage),
+// so every cache this app owns starts with this prefix.
+const CACHE_PREFIX = "arusuvai-";
+const CACHE_NAME = CACHE_PREFIX + "v1.0.1-shell";
 
 const APP_SHELL = [
   './',
@@ -34,6 +40,29 @@ self.addEventListener('activate', event => {
   );
 });
 
+// Look up a request ONLY in Arusuvai's own cache.
+// (caches.match() would search every cache on the shared origin.)
+async function ownCacheMatch(request) {
+  const cache = await caches.open(CACHE_NAME);
+  return cache.match(request, { ignoreSearch: true });
+}
+
+// Always resolve with a real Response (never undefined/throw), so the
+// page can never go blank when the network fails.
+async function offlineFallback(cachedResponse, isShell) {
+  if (cachedResponse) return cachedResponse;
+
+  if (isShell) {
+    const shell = await ownCacheMatch('./index.html');
+    if (shell) return shell;
+  }
+
+  return new Response('Offline and nothing cached yet. Please reload.', {
+    status: 503,
+    headers: { 'Content-Type': 'text/plain' }
+  });
+}
+
 async function networkFirst(request) {
   const cache = await caches.open(CACHE_NAME);
   try {
@@ -43,14 +72,13 @@ async function networkFirst(request) {
     }
     return response;
   } catch (error) {
-    const cached = await cache.match(request);
-    if (cached) return cached;
-    throw error;
+    const cached = await ownCacheMatch(request);
+    return offlineFallback(cached, true);
   }
 }
 
 async function cacheFirst(request) {
-  const cached = await caches.match(request);
+  const cached = await ownCacheMatch(request);
   if (cached) return cached;
 
   try {
@@ -61,7 +89,7 @@ async function cacheFirst(request) {
     }
     return response;
   } catch (error) {
-    return caches.match('./index.html');
+    return offlineFallback(null, true);
   }
 }
 
