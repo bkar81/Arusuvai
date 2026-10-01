@@ -229,6 +229,8 @@ PDF             → browser Print / Save as PDF using the export layout</div>
     <div class="about-card">
       <h3>Version</h3>
       <div class="about-version"><span><b>Arusuvai — Your Recipe Companion</b><br><span class="small muted">Local-first recipe book with optional Google Drive sync, recipe sharing and export tools.</span></span><span class="tag">v1.1.0</span></div>
+      <p class="small muted" id="updateStatus" style="margin:12px 0 0">Tap the button to check whether a newer version is available.</p>
+      <button class="btn" id="checkUpdate" style="margin-top:9px;width:100%">↻ Check for updates</button>
     </div>
   </div>
 </section>
@@ -1384,6 +1386,35 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+
+// About → Version → "Check for updates"
+(function(){
+  const btn=document.getElementById('checkUpdate'),status=document.getElementById('updateStatus');
+  if(!btn||!status)return;
+  const say=m=>{status.textContent=m};
+  btn.addEventListener('click',async()=>{
+    if(!('serviceWorker' in navigator)){say('Updates are not supported in this browser.');return}
+    btn.disabled=true;say('Checking for updates…');
+    try{
+      const reg=await navigator.serviceWorker.getRegistration('./');
+      if(!reg){say('Service worker is not active yet. Reload the app and try again.');toast('Service worker is not available.');return}
+      await reg.update();
+      const w=reg.installing||reg.waiting;
+      if(!w){say("You're using the latest version.");toast("You're using the latest version.");return}
+      say('New version found. Installing…');
+      const result=await new Promise(resolve=>{
+        const done=()=>{if(w.state==='activated')resolve('ok');else if(w.state==='redundant')resolve('failed')};
+        w.addEventListener('statechange',done);done();
+        setTimeout(()=>resolve('timeout'),15000);
+      });
+      if(result==='ok'){say('A new version was installed. Close and reopen Arusuvai to use it.');toast('New version installed.')}
+      else if(result==='failed'){say('A new version was found but could not be installed. Please try again.');toast('Update could not be installed.')}
+      else{say('A new version is downloading. Close and reopen Arusuvai in a moment to use it.')}
+    }catch(e){
+      say('Could not check for updates. Please try again.');toast('Could not check for updates.');
+    }finally{btn.disabled=false}
+  });
+})();
 </script>
 <!-- Embedded Arusuvai artwork kept as static SVG in the lower HTML; no external image dependency is required. -->
 <div id="embeddedArtworkStatic" aria-hidden="true" style="position:absolute;left:-10000px;top:-10000px;width:1px;height:1px;overflow:hidden">
