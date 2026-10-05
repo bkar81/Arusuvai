@@ -11,10 +11,10 @@
 <title>Arusuvai — Your Recipe Companion</title>
 <link rel="manifest" href="manifest.json">
 <style>
-:root{--accent:#0065F1;--accent-soft:#eaf2ff;--bg:#f7f9fc;--surface:#fff;--surface2:#f1f5fa;--surface3:#eef3f9;--text:#172033;--muted:#71809a;--border:#d5dfec;--border-soft:#e8edf4;--danger:#d92d20;--success:#16834a;--shadow:0 7px 22px rgba(30,55,90,.07);--radius:14px}
+:root{--accent:#0065F1;--accent-soft:#eaf2ff;--bg:#f7f9fc;--surface:#fff;--surface2:#f1f5fa;--surface3:#eef3f9;--text:#172033;--muted:#71809a;--faint:#8a97aa;--accent-text:#0065F1;--border:#d5dfec;--border-soft:#e8edf4;--danger:#d92d20;--success:#16834a;--shadow:0 7px 22px rgba(30,55,90,.07);--radius:14px}
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text)}
-body.dark{--accent:#D9A441;--accent-soft:#2b281f;--bg:#12161b;--surface:#171b21;--surface2:#1e242c;--surface3:#232a33;--text:#f1f2f4;--muted:#8995a7;--border:#303844;--border-soft:#272e38;--shadow:0 10px 26px rgba(0,0,0,.24)}
+body.dark{--accent:#D9A441;--accent-soft:#2b281f;--bg:#12161b;--surface:#171b21;--surface2:#1e242c;--surface3:#232a33;--text:#f1f5f9;--muted:#a8b3c7;--faint:#7c889c;--accent-text:#e5b04a;--border:#303844;--border-soft:#272e38;--shadow:0 10px 26px rgba(0,0,0,.24)}
 button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit}
 #app{width:100%;height:100%;overflow:hidden}
 .topbar{position:fixed;z-index:1000;top:0;left:0;right:0;height:66px;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:8px max(12px,env(safe-area-inset-left)) 8px max(12px,env(safe-area-inset-right));gap:10px}
@@ -92,6 +92,42 @@ main{position:fixed;top:66px;bottom:72px;left:0;right:0;overflow-x:hidden;overfl
 @media(max-width:760px){.recipe-grid{grid-template-columns:1fr}.detail-hero{grid-template-columns:1fr}.recipe-content{grid-template-columns:1fr}.recipe-column+.recipe-column{border-left:0;border-top:1px solid var(--border)}.toolkit,.cheat{grid-template-columns:1fr}.toolkit>div+div,.cheat>div+div{border-left:0;border-top:1px solid var(--border)}.stat-grid{grid-template-columns:repeat(5,minmax(68px,1fr));overflow:auto}.stat{min-width:68px}.taste-grid{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.about-grid{grid-template-columns:1fr}.about-hero{align-items:flex-start}.about-logo{width:76px;height:76px;border-radius:17px}.about-version{align-items:flex-start}.brand-caption{max-width:145px}.recipe-toolbar{grid-template-columns:1fr auto auto}.detail-actions{gap:4px}.icon-action{width:38px;height:38px}}
 @media(min-width:1000px){main{padding-left:20px;padding-right:20px}.home-logo{width:540px}}
 @media print{body{overflow:visible}.topbar,.bottom-nav,.no-print{display:none!important}main{position:static;overflow:visible;padding:0;max-width:none}.page{display:none!important}#page-recipes{display:block!important}#recipeListView{display:none!important}#recipeDetailView{display:block!important}.card{box-shadow:none}}
+
+/* Dark theme text palette — font colors only. */
+body.dark .btn,
+body.dark .icon-action.primary,
+body.dark .recipe-view-toggle .icon-action.active{color:#111827}
+body.dark .icon-btn.accent,
+body.dark .btn.ghost,
+body.dark .btn.soft,
+body.dark .icon-action,
+body.dark .info-box,
+body.dark .chip.active,
+body.dark .eyebrow,
+body.dark .recipe-stat-icon,
+body.dark .round-btn,
+body.dark .ingredient-group h4,
+body.dark .ingredient .qty,
+body.dark .phase-time,
+body.dark .cheat b,
+body.dark details.section>summary:before,
+body.dark .settings-tab.active,
+body.dark .settings-collapsible summary:before,
+body.dark .builder-step>summary:before,
+body.dark .recipe-json-share,
+body.dark .about-tagline,
+body.dark .about-feature strong .about-ico,
+body.dark .about-link,
+body.dark .nav-btn.active{color:var(--accent-text)}
+body.dark .brand-caption,
+body.dark .taste span,
+body.dark .stat span,
+body.dark .recipe-detail-head .recipe-no,
+body.dark .field label,
+body.dark .settings-row .setting-label small,
+body.dark .builder-tools .builder-collapse-status,
+body.dark .about-note,
+body.dark .dz-note{color:var(--faint)}
 </style>
 <style>html,body{touch-action:pan-x pan-y}html.zoom-ok,html.zoom-ok body{touch-action:auto}.recipe-footer{justify-content:flex-end!important}.dz-note{font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.45}.dz-range{display:flex;align-items:center;gap:10px}.dz-range input{flex:1}</style></head>
 <body>
