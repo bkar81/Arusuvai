@@ -4,7 +4,7 @@
 // All apps share one GitHub Pages origin (and one Cache Storage),
 // so every cache this app owns starts with this prefix.
 const CACHE_PREFIX = "arusuvai-";
-const CACHE_NAME = CACHE_PREFIX + "v1.0.4-shell";
+const CACHE_NAME = CACHE_PREFIX + "v1.0.5-shell";
 
 const APP_SHELL = [
   './',
