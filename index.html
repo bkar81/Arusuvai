@@ -890,7 +890,7 @@ function mergeRecipes(local,remote){
     const existing=builderIsExisting(r);
     const nextNo=String(Math.max(Number(state.nextRecipeNo)||1,...state.recipes.map(x=>Number(x.recipeNo)||0))).padStart(3,'0');
     $('#builderPanel').innerHTML=`
-      <div class="recipe-detail-head"><button class="btn ghost small" id="builderBack">← Recipes</button><span class="recipe-no">${existing?'Editing Recipe':'New Recipe'}</span><button class="btn ghost small" id="builderTopCancel">Cancel</button></div>
+      <div class="recipe-detail-head"><button class="btn ghost small" id="builderBack">← Recipes</button><span class="recipe-no">${existing?'Editing Recipe':'New Recipe'}</span><button class="btn danger" id="builderTopCancel">Cancel</button></div>
       <div class="builder-tools"><span class="builder-collapse-status" id="builderCollapseStatus">All sections start collapsed</span><button class="btn ghost small" id="builderCollapseAll">▸ Collapse all</button><button class="btn ghost small" id="builderExpandAll">▾ Expand all</button></div>
       <div class="info-box">Recipe content can be entered in any language. Main name and local alias are kept separate so the app remains language-neutral.${existing?` The Recipe No. is retained for ordering and backup/sync, but is not shown in recipe cards or exports.`:''}</div>
       <details class="section"><summary>Recipe identity</summary><div class="section-body"><div class="form-grid">
